@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <title>Worrying About The Weather</title>
+</head>
+<body>
+    <header>
+        <div class="flex-row bg-blue justify-center align-center">
+            <h1 id="header1" class="justify-center align-center">Weather Dashboard</h1>
+        </div>
+    </header>
+
+    <section class="flex-column col-3">
+        <div class="card col-3">
+            <h2>Search for a City:</h2>
+            <textarea id="search" class="form-input">City</textarea>
+            <button id="searchBtn" class="btn btn-inline">Search</button>
+        </div>
+    </section>
+    <script src="./assets/js/script.js"></script> 
+    <section class="flex-column col-9">
+        <div id="curr-weather" class="flex-row"></div>
+        <div id="future-weather" class="flex-row"></div>
+    </section>
+</body>
+</html>
