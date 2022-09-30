@@ -3,7 +3,23 @@ var currentWeatherEl = document.querySelector('#current-weather');
 var futureWeatherEl = document.querySelector('#future-weather');
 var weatherDocEl = document.querySelector('.weather-content');
 var latlonApi = "b2e5f00a4ae1d8bc662c377493172660";
-var weatherApi = "676e062b36d3433830f8fc2196aa276e"
+var weatherApi = "676e062b36d3433830f8fc2196aa276e";
+var searchHistoryEl = document.querySelector('.search-history')
+
+var locations = [];
+
+var storedLocationString = localStorage.getItem("locations");
+var storedLocations = JSON.parse(storedLocationString);
+locations = JSON.parse(storedLocationString);
+console.log(storedLocations);
+
+
+for (var i = 0; i < storedLocations.length; i++) {
+    var newButton = document.createElement("button");
+    newButton.classList.add('search-button');
+    newButton.innerText = storedLocations[i];
+    searchHistoryEl.appendChild(newButton);
+}
 
 var displayWeather = function(weather) {
     var currentTemp = weather.list[0].main.temp.toFixed(0) + " °F";
@@ -59,6 +75,7 @@ var displayWeather = function(weather) {
 }
 
 var getWeather = function(location) {
+    document.getElementById('current-city').innerText = `Current Weather for ${location[0].name}`;
     console.log(location);
     var lat = location[0].lat.toFixed(2);
     var lon = location[0].lon.toFixed(2);
@@ -68,14 +85,15 @@ var getWeather = function(location) {
     fetch(weatherUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
+                console.log(data);
                 displayWeather(data);
             })
         }
     });
 };
 
-var getLatlon = function(city, state) {
-    var latlonUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "," + state + "," + "US&limit=1&appid=" + latlonApi;
+var getLatlon = function(city) {
+    var latlonUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${latlonApi}`;
     fetch(latlonUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
@@ -89,7 +107,18 @@ var getLatlon = function(city, state) {
 
 document.querySelector('#searchBtn').addEventListener('click', function() {
     let cityEl = document.querySelector('textarea[id="city"]').value.trim();
-    let stateEl = document.querySelector('#state').value.trim();
+    locations.push(cityEl);
+    localStorage.setItem("locations", JSON.stringify(locations));
     
-    getLatlon(cityEl, stateEl);
+    getLatlon(cityEl);
+});
+
+document.querySelector('#button-wrapper').addEventListener('click', function(event) {
+    var isButton = event.target.nodeName === 'BUTTON';
+    if (!isButton) {
+        return;
+    }
+    let cityName = event.target.innerText;
+
+    getLatlon(cityName);
 });

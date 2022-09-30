@@ -118,7 +118,7 @@
   }
   
   /* CARDS */
-  .card {
+  .card-border {
     margin: 0 0 20px 0;
     border: 3px solid black;
     border-radius: 10px;
@@ -161,4 +161,14 @@
   
   .min-100-vw {
     min-width: 100vw;
+  }
+
+  #button-wrapper {
+    display: flexbox;
+    justify-content: space-evenly;
+    padding: 20px;
+  }
+
+  .search-button {
+    margin: 5px
   }
