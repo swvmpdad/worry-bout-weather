@@ -14,7 +14,7 @@ locations = JSON.parse(storedLocationString);
 console.log(storedLocations);
 
 
-for (var i = 0; i < storedLocations.length; i++) {
+for (var i = 0; i < locations.length; i++) {
     var newButton = document.createElement("button");
     newButton.classList.add('search-button');
     newButton.innerText = storedLocations[i];
