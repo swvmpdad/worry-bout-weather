@@ -8,17 +8,19 @@ var searchHistoryEl = document.querySelector('.search-history')
 
 var locations = [];
 
-var storedLocationString = localStorage.getItem("locations");
-var storedLocations = JSON.parse(storedLocationString);
-locations = JSON.parse(storedLocationString);
-console.log(storedLocations);
+var getLocalStorage = function() {
+    var storedLocationString = localStorage.getItem("locations");
+    var storedLocations = JSON.parse(storedLocationString);
+    locations = JSON.parse(storedLocationString);
 
-
-for (var i = 0; i < locations.length; i++) {
-    var newButton = document.createElement("button");
-    newButton.classList.add('search-button');
-    newButton.innerText = storedLocations[i];
-    searchHistoryEl.appendChild(newButton);
+    if (locations) {
+        for (var i = 0; i < locations.length; i++) {
+            var newButton = document.createElement("button");
+            newButton.classList.add('search-button');
+            newButton.innerText = storedLocations[i];
+            searchHistoryEl.appendChild(newButton);
+        }
+    }
 }
 
 var displayWeather = function(weather) {
@@ -107,7 +109,13 @@ var getLatlon = function(city) {
 
 document.querySelector('#searchBtn').addEventListener('click', function() {
     let cityEl = document.querySelector('textarea[id="city"]').value.trim();
-    locations.push(cityEl);
+    if (locations === null) {
+        locations = [cityEl]
+    } else {
+        locations.push(cityEl);
+    }
+
+    
     localStorage.setItem("locations", JSON.stringify(locations));
     
     getLatlon(cityEl);
@@ -122,3 +130,5 @@ document.querySelector('#button-wrapper').addEventListener('click', function(eve
 
     getLatlon(cityName);
 });
+
+getLocalStorage();
