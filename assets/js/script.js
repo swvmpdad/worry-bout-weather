@@ -82,7 +82,7 @@ var getWeather = function(location) {
     var lat = location[0].lat.toFixed(2);
     var lon = location[0].lon.toFixed(2);
 
-    var weatherUrl = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApi}&units=imperial`;
+    var weatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${weatherApi}&units=imperial`;
 
     fetch(weatherUrl).then(function(response) {
         if (response.ok) {
@@ -95,7 +95,7 @@ var getWeather = function(location) {
 };
 
 var getLatlon = function(city) {
-    var latlonUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${latlonApi}`;
+    var latlonUrl = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${latlonApi}`;
     fetch(latlonUrl).then(function(response) {
         if (response.ok) {
             response.json().then(function(data) {
